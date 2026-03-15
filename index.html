@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DealKaro – Best Amazon Deals & Reviews</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --card: #1a1a24;
+    --border: #2a2a3a;
+    --accent: #ff6b00;
+    --accent2: #ffb300;
+    --text: #f0f0f5;
+    --muted: #888899;
+    --green: #00e676;
+    --badge: #ff1744;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+
+  .logo {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.7rem; font-weight: 800;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .logo span { font-size: 1rem; color: var(--muted); -webkit-text-fill-color: var(--muted); }
+
+  nav { display: flex; gap: 28px; }
+  nav a {
+    color: var(--muted); text-decoration: none; font-size: 0.9rem;
+    font-weight: 500; transition: color 0.2s; position: relative;
+  }
+  nav a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0;
+    width: 0; height: 2px; background: var(--accent);
+    transition: width 0.3s;
+  }
+  nav a:hover { color: var(--text); }
+  nav a:hover::after { width: 100%; }
+
+  .cta-btn {
+    background: var(--accent); color: #fff;
+    border: none; padding: 9px 22px; border-radius: 50px;
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 20px rgba(255,107,0,0.3);
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(255,107,0,0.5); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: 90px 5vw 80px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(255,107,0,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 60% at 20% 20%, rgba(255,179,0,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .hero-content { position: relative; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,107,0,0.12); border: 1px solid rgba(255,107,0,0.3);
+    padding: 6px 16px; border-radius: 50px;
+    font-size: 0.78rem; color: var(--accent); font-weight: 600;
+    margin-bottom: 24px; letter-spacing: 0.5px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before { content: '🔥'; }
+
+  h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 800;
+    line-height: 1.1; margin-bottom: 20px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    color: var(--muted); font-size: 1rem; line-height: 1.7;
+    margin-bottom: 36px; animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-btns { display: flex; gap: 14px; animation: fadeUp 0.6s 0.3s ease both; }
+  .btn-primary {
+    background: var(--accent); color: #fff; border: none;
+    padding: 13px 28px; border-radius: 50px; font-size: 0.95rem;
+    font-weight: 600; cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 4px 30px rgba(255,107,0,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(255,107,0,0.5); }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border); padding: 13px 28px;
+    border-radius: 50px; font-size: 0.95rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 44px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat-num {
+    font-family: 'Baloo 2', cursive; font-size: 1.6rem; font-weight: 800; color: var(--accent);
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+  .hero-visual { position: relative; animation: fadeUp 0.8s 0.2s ease both; }
+  .hero-card-float {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 24px; position: relative;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+  .hero-card-float::before {
+    content: ''; position: absolute; inset: -1px; border-radius: 21px;
+    background: linear-gradient(135deg, rgba(255,107,0,0.3), transparent, rgba(255,179,0,0.2));
+    z-index: -1;
+  }
+  .float-tag {
+    position: absolute; top: -14px; right: 20px;
+    background: var(--badge); color: #fff;
+    padding: 5px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+  }
+  .product-img-placeholder {
+    width: 100%; height: 180px; border-radius: 12px;
+    background: linear-gradient(135deg, #1e1e2e, #2a1a0a);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; margin-bottom: 16px;
+  }
+  .product-title { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+  .stars { color: var(--accent2); font-size: 0.85rem; margin-bottom: 12px; }
+  .price-row { display: flex; align-items: center; gap: 12px; }
+  .price-new { font-family: 'Baloo 2'; font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+  .price-old { font-size: 0.9rem; color: var(--muted); text-decoration: line-through; }
+  .discount-pill {
+    background: rgba(0,230,118,0.15); color: var(--green);
+    padding: 3px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+  }
+  .buy-btn {
+    width: 100%; margin-top: 16px; padding: 12px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #fff; border: none; border-radius: 12px;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .buy-btn:hover { opacity: 0.85; }
+
+  /* ── CATEGORIES ── */
+  .section { padding: 70px 5vw; }
+  .section-header { text-align: center; margin-bottom: 48px; }
+  .section-label {
+    display: inline-block; font-size: 0.75rem; font-weight: 700;
+    color: var(--accent); letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Baloo 2', cursive; font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800; line-height: 1.2;
+  }
+
+  .cat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  .cat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px 16px;
+    text-align: center; cursor: pointer;
+    transition: all 0.25s; position: relative; overflow: hidden;
+  }
+  .cat-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0); transition: transform 0.3s;
+  }
+  .cat-card:hover { border-color: rgba(255,107,0,0.4); transform: translateY(-4px); }
+  .cat-card:hover::before { transform: scaleX(1); }
+  .cat-icon { font-size: 2.2rem; margin-bottom: 10px; }
+  .cat-name { font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+
+  /* ── PRODUCTS GRID ── */
+  .products-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; overflow: hidden;
+    transition: all 0.3s; position: relative;
+  }
+  .product-card:hover { transform: translateY(-6px); border-color: rgba(255,107,0,0.4); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+  .badge-hot {
+    position: absolute; top: 14px; left: 14px;
+    background: var(--badge); color: #fff;
+    padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 800;
+    letter-spacing: 0.5px; z-index: 1;
+  }
+  .badge-deal {
+    position: absolute; top: 14px; left: 14px;
+    background: var(--green); color: #000;
+    padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 800;
+    z-index: 1;
+  }
+  .wish-btn {
+    position: absolute; top: 14px; right: 14px; z-index: 1;
+    background: rgba(0,0,0,0.5); border: none; border-radius: 50%;
+    width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1rem; transition: all 0.2s;
+    backdrop-filter: blur(6px);
+  }
+  .wish-btn:hover { background: rgba(255,107,0,0.3); }
+
+  .prod-img {
+    height: 200px; background: linear-gradient(135deg, #1a1a28, #22160a);
+    display: flex; align-items: center; justify-content: center; font-size: 4.5rem;
+  }
+  .prod-body { padding: 18px; }
+  .prod-category { font-size: 0.72rem; color: var(--accent); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .prod-name { font-size: 0.95rem; font-weight: 600; line-height: 1.4; margin-bottom: 8px; color: var(--text); }
+  .prod-stars { font-size: 0.8rem; color: var(--accent2); margin-bottom: 12px; }
+  .prod-stars span { color: var(--muted); margin-left: 4px; }
+  .prod-price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .prod-price { font-family: 'Baloo 2'; font-size: 1.35rem; font-weight: 800; color: var(--accent); }
+  .prod-mrp { font-size: 0.82rem; color: var(--muted); text-decoration: line-through; }
+  .prod-off { font-size: 0.75rem; color: var(--green); font-weight: 700; }
+  .prod-btn {
+    width: 100%; padding: 11px; border: none; border-radius: 10px;
+    font-size: 0.88rem; font-weight: 700; cursor: pointer;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #fff; transition: opacity 0.2s;
+  }
+  .prod-btn:hover { opacity: 0.85; }
+  .prime-badge { color: #00a8e0; font-size: 0.75rem; font-weight: 600; margin-bottom: 10px; }
+
+  /* ── DEALS BANNER ── */
+  .deals-banner {
+    margin: 0 5vw;
+    background: linear-gradient(135deg, #1a0a00, #2a1500, #1a0a00);
+    border: 1px solid rgba(255,107,0,0.3);
+    border-radius: 24px; padding: 48px 40px;
+    display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px;
+    position: relative; overflow: hidden;
+  }
+  .deals-banner::before {
+    content: ''; position: absolute; right: -60px; top: -60px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,107,0,0.15), transparent 70%);
+  }
+  .deals-title {
+    font-family: 'Baloo 2', cursive; font-size: 2rem; font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .deals-sub {
+    font-family: 'Noto Sans Devanagari'; color: var(--muted); font-size: 0.95rem; margin-bottom: 20px;
+  }
+  .timer { display: flex; gap: 12px; }
+  .timer-unit {
+    background: rgba(0,0,0,0.4); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 16px; text-align: center; min-width: 64px;
+  }
+  .timer-num { font-family: 'Baloo 2'; font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+  .timer-label { font-size: 0.65rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ── WHY US ── */
+  .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .why-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px 24px; text-align: center;
+    transition: border-color 0.25s;
+  }
+  .why-card:hover { border-color: rgba(255,107,0,0.3); }
+  .why-icon { font-size: 2.4rem; margin-bottom: 14px; }
+  .why-title { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .why-text { font-size: 0.84rem; color: var(--muted); line-height: 1.6; font-family: 'Noto Sans Devanagari'; }
+
+  /* ── NEWSLETTER ── */
+  .newsletter {
+    margin: 0 5vw 70px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 24px; padding: 56px; text-align: center;
+  }
+  .newsletter h2 { font-family: 'Baloo 2'; font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+  .newsletter p { color: var(--muted); font-family: 'Noto Sans Devanagari'; margin-bottom: 28px; }
+  .nl-form { display: flex; gap: 12px; max-width: 500px; margin: 0 auto; }
+  .nl-input {
+    flex: 1; padding: 14px 20px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 50px; color: var(--text);
+    font-size: 0.9rem; outline: none; transition: border-color 0.2s;
+  }
+  .nl-input:focus { border-color: var(--accent); }
+  .nl-input::placeholder { color: var(--muted); }
+  .nl-btn {
+    padding: 14px 28px; background: var(--accent); color: #fff;
+    border: none; border-radius: 50px; font-weight: 700; cursor: pointer;
+    white-space: nowrap; transition: opacity 0.2s;
+  }
+  .nl-btn:hover { opacity: 0.85; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 48px 5vw 28px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  .footer-brand .logo { display: block; margin-bottom: 14px; }
+  .footer-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.7; font-family: 'Noto Sans Devanagari'; }
+  .footer-col h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.5px; color: var(--text); }
+  .footer-col a {
+    display: block; color: var(--muted); text-decoration: none; font-size: 0.84rem;
+    margin-bottom: 10px; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: 0.78rem; color: var(--muted); }
+  .disclaimer {
+    background: rgba(255,107,0,0.06); border: 1px solid rgba(255,107,0,0.15);
+    border-radius: 8px; padding: 12px 18px; margin-top: 20px;
+    font-size: 0.75rem; color: var(--muted); line-height: 1.6;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fadeUp 0.6s ease both; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .cat-grid { grid-template-columns: repeat(3, 1fr); }
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    nav { display: none; }
+    .deals-banner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .nl-form { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">DealKaro <span>by Amazon Associates</span></div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Deals</a>
+    <a href="#">Categories</a>
+    <a href="#">Reviews</a>
+    <a href="#">Blog</a>
+  </nav>
+  <button class="cta-btn">🛒 Top Deals</button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Today's Hottest Amazon Deals</div>
+    <h1>सबसे बेस्ट <em>Amazon Deals</em> एक जगह</h1>
+    <p class="hero-sub">Expert reviews, verified deals aur Amazon ke best products — hamari team roz curate karti hai aapke liye!</p>
+    <div class="hero-btns">
+      <button class="btn-primary">🔥 Deals Dekho</button>
+      <button class="btn-outline">📋 Reviews Padho</button>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Products Reviewed</div>
+      </div>
+      <div>
+        <div class="stat-num">₹2L+</div>
+        <div class="stat-label">Bachaaye Readers Ne</div>
+      </div>
+      <div>
+        <div class="stat-num">50K+</div>
+        <div class="stat-label">Happy Shoppers</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card-float">
+      <div class="float-tag">🔥 #1 Pick</div>
+      <div class="product-img-placeholder">🎧</div>
+      <div class="product-title">boAt Rockerz 450 Bluetooth Headphones</div>
+      <div class="stars">★★★★★ <span style="color:var(--muted);font-size:0.8rem">4.4 (28,492)</span></div>
+      <div class="price-row">
+        <div class="price-new">₹1,299</div>
+        <div class="price-old">₹3,990</div>
+        <div class="discount-pill">67% OFF</div>
+      </div>
+      <div style="font-size:0.78rem;color:#00a8e0;margin-top:8px;">✓ Prime Free Delivery</div>
+      <button class="buy-btn">Amazon Par Kharido →</button>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-label">Browse Categories</div>
+    <h2 class="section-title">Kya Dhundh Rahe Ho? 🔍</h2>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card"><div class="cat-icon">📱</div><div class="cat-name">Mobiles</div></div>
+    <div class="cat-card"><div class="cat-icon">💻</div><div class="cat-name">Laptops</div></div>
+    <div class="cat-card"><div class="cat-icon">🎧</div><div class="cat-name">Audio</div></div>
+    <div class="cat-card"><div class="cat-icon">📷</div><div class="cat-name">Cameras</div></div>
+    <div class="cat-card"><div class="cat-icon">🏠</div><div class="cat-name">Home & Kitchen</div></div>
+    <div class="cat-card"><div class="cat-icon">👗</div><div class="cat-name">Fashion</div></div>
+  </div>
+</section>
+
+<!-- TOP DEALS -->
+<section class="section" style="padding-top:0">
+  <div class="section-header">
+    <div class="section-label">Top Picks</div>
+    <h2 class="section-title">Aaj Ke Best Deals 🛍️</h2>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card">
+      <div class="badge-hot">HOT</div>
+      <button class="wish-btn">🤍</button>
+      <div class="prod-img">📱</div>
+      <div class="prod-body">
+        <div class="prod-category">Smartphones</div>
+        <div class="prod-name">Redmi Note 13 Pro+ 5G (256GB, Midnight Black)</div>
+        <div class="prod-stars">★★★★★ <span>(15,234)</span></div>
+        <div class="prime-badge">✓ Prime</div>
+        <div class="prod-price-row">
+          <span class="prod-price">₹26,999</span>
+          <span class="prod-mrp">₹39,999</span>
+          <span class="prod-off">33% off</span>
+        </div>
+        <button class="prod-btn">Amazon Par Dekho →</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="badge-deal">DEAL</div>
+      <button class="wish-btn">🤍</button>
+      <div class="prod-img">⌚</div>
+      <div class="prod-body">
+        <div class="prod-category">Smart Watches</div>
+        <div class="prod-name">Noise ColorFit Ultra 3 Smartwatch AMOLED Display</div>
+        <div class="prod-stars">★★★★☆ <span>(8,901)</span></div>
+        <div class="prime-badge">✓ Prime</div>
+        <div class="prod-price-row">
+          <span class="prod-price">₹1,799</span>
+          <span class="prod-mrp">₹7,999</span>
+          <span class="prod-off">77% off</span>
+        </div>
+        <button class="prod-btn">Amazon Par Dekho →</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <button class="wish-btn">🤍</button>
+      <div class="prod-img">🎮</div>
+      <div class="prod-body">
+        <div class="prod-category">Gaming</div>
+        <div class="prod-name">Ant Esports GM600 Wireless Gaming Mouse RGB</div>
+        <div class="prod-stars">★★★★★ <span>(4,512)</span></div>
+        <div class="prime-badge">✓ Prime</div>
+        <div class="prod-price-row">
+          <span class="prod-price">₹599</span>
+          <span class="prod-mrp">₹1,999</span>
+          <span class="prod-off">70% off</span>
+        </div>
+        <button class="prod-btn">Amazon Par Dekho →</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="badge-hot">NEW</div>
+      <button class="wish-btn">🤍</button>
+      <div class="prod-img">🖥️</div>
+      <div class="prod-body">
+        <div class="prod-category">Monitors</div>
+        <div class="prod-name">LG 24MR400-B 24" FHD IPS Monitor 100Hz</div>
+        <div class="prod-stars">★★★★☆ <span>(2,789)</span></div>
+        <div class="prime-badge">✓ Prime</div>
+        <div class="prod-price-row">
+          <span class="prod-price">₹8,999</span>
+          <span class="prod-mrp">₹14,999</span>
+          <span class="prod-off">40% off</span>
+        </div>
+        <button class="prod-btn">Amazon Par Dekho →</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="badge-deal">DEAL</div>
+      <button class="wish-btn">🤍</button>
+      <div class="prod-img">🔌</div>
+      <div class="prod-body">
+        <div class="prod-category">Accessories</div>
+        <div class="prod-name">Anker 65W USB-C GaN Fast Charger with 3 Ports</div>
+        <div class="prod-stars">★★★★★ <span>(6,234)</span></div>
+        <div class="prime-badge">✓ Prime</div>
+        <div class="prod-price-row">
+          <span class="prod-price">₹1,299</span>
+          <span class="prod-mrp">₹2,999</span>
+          <span class="prod-off">57% off</span>
+        </div>
+        <button class="prod-btn">Amazon Par Dekho →</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <button class="wish-btn">🤍</button>
+      <div class="prod-img">🧴</div>
+      <div class="prod-body">
+        <div class="prod-category">Beauty & Health</div>
+        <div class="prod-name">Mamaearth Vitamin C Face Serum 30ml (Pack of 2)</div>
+        <div class="prod-stars">★★★★☆ <span>(11,023)</span></div>
+        <div class="prime-badge">✓ Prime</div>
+        <div class="prod-price-row">
+          <span class="prod-price">₹449</span>
+          <span class="prod-mrp">₹898</span>
+          <span class="prod-off">50% off</span>
+        </div>
+        <button class="prod-btn">Amazon Par Dekho →</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DEALS COUNTDOWN BANNER -->
+<div class="deals-banner">
+  <div>
+    <div style="font-size:0.78rem;color:var(--accent);font-weight:700;letter-spacing:2px;margin-bottom:8px;">⚡ LIGHTNING DEAL</div>
+    <div class="deals-title">🎉 Today's Deal of the Day</div>
+    <div class="deals-sub">Yeh deal sirf aaj ke liye hai — time khatam hone se pehle grab karo!</div>
+    <div class="timer">
+      <div class="timer-unit"><div class="timer-num" id="h">08</div><div class="timer-label">Hours</div></div>
+      <div class="timer-unit"><div class="timer-num" id="m">34</div><div class="timer-label">Mins</div></div>
+      <div class="timer-unit"><div class="timer-num" id="s">47</div><div class="timer-label">Secs</div></div>
+    </div>
+  </div>
+  <div>
+    <button class="btn-primary" style="font-size:1.05rem;padding:16px 36px;">🔥 Deal Grab Karo</button>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-label">Why DealKaro?</div>
+    <h2 class="section-title">Hum Kyun Best Hain? 💪</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">✅</div>
+      <div class="why-title">Verified Reviews</div>
+      <div class="why-text">Har product ko hamari team personally test karti hai — koi sponsored review nahi</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💰</div>
+      <div class="why-title">Best Price Guarantee</div>
+      <div class="why-text">Hum track karte hain Amazon par price history — aapko milta hai lowest price alert</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🚀</div>
+      <div class="why-title">Daily Updated</div>
+      <div class="why-text">Roz nayi deals, offers aur coupons update hoti hain — koi deal miss mat karo</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🛡️</div>
+      <div class="why-title">Safe Shopping</div>
+      <div class="why-text">Saare links directly Amazon.in par jaate hain — 100% safe aur secure</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>📧 Deal Alert Subscribe Karo!</h2>
+  <p>Roz subah best deals aapke inbox mein — free mein!</p>
+  <div class="nl-form">
+    <input class="nl-input" type="email" placeholder="aapka@email.com">
+    <button class="nl-btn">Subscribe 🔔</button>
+  </div>
+  <div style="margin-top:16px;font-size:0.78rem;color:var(--muted)">No spam. Kabhi bhi unsubscribe kar sakte ho.</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">DealKaro</span>
+      <p class="footer-desc">Amazon ke best products ke reviews aur deals ek jagah. Hamara goal hai ki aap hamesha sahi product chunein aur best price mein khareedein.</p>
+      <div class="disclaimer">
+        ⚠️ Affiliate Disclosure: Is website ke links Amazon Associate links hain. Jab aap in links se khareedete hain, toh hume ek small commission milta hai — aapko koi extra charge nahi lagta. Prices aur availability change ho sakti hai.
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Categories</h4>
+      <a href="#">Mobiles & Tablets</a>
+      <a href="#">Laptops</a>
+      <a href="#">Audio & Headphones</a>
+      <a href="#">Smart Home</a>
+      <a href="#">Gaming</a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="#">Today's Deals</a>
+      <a href="#">Price Tracker</a>
+      <a href="#">Top Reviews</a>
+      <a href="#">Buying Guides</a>
+      <a href="#">Comparison Tool</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Disclaimer</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 DealKaro. Amazon Associates Program ka part.</div>
+    <div style="font-size:0.78rem;color:var(--muted)">Made with ❤️ for Indian Shoppers</div>
+  </div>
+</footer>
+
+<script>
+  // Countdown Timer
+  function tick() {
+    const el = { h: document.getElementById('h'), m: document.getElementById('m'), s: document.getElementById('s') };
+    let h = parseInt(el.h.textContent), m = parseInt(el.m.textContent), s = parseInt(el.s.textContent);
+    s--;
+    if (s < 0) { s = 59; m--; }
+    if (m < 0) { m = 59; h--; }
+    if (h < 0) { h = 23; m = 59; s = 59; }
+    el.h.textContent = String(h).padStart(2,'0');
+    el.m.textContent = String(m).padStart(2,'0');
+    el.s.textContent = String(s).padStart(2,'0');
+  }
+  setInterval(tick, 1000);
+
+  // Wishlist toggle
+  document.querySelectorAll('.wish-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.animation = 'fadeUp 0.6s ease both'; } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.product-card, .cat-card, .why-card').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
